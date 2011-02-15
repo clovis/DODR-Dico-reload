@@ -711,7 +711,6 @@ def daf_loader(table, dico_dict):
 ## Specify dico path
 dico_path = "../dicos/"
 
-
 ## Get MySQL password from the command line
 ## Die if no passwords were provided
 try:
