@@ -130,9 +130,7 @@ except IndexError:
             'acad1798', 'acad1835', 'acad1932', 'littre', 'tlfi']
 
 ## MySQL instantiation
-db = psycopg2.connect("dbname=dvlf user=clovis")
-#print db.encoding
-#db.set_client_encoding('UTF8')
+db = psycopg2.connect("dbname=dvlf user=postgres")
 cursor = db.cursor()
 
 ## Dico parsing and loading
