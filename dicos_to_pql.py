@@ -19,6 +19,7 @@ import acad1762
 import acad1798
 import acad1835
 import acad1932
+import bob
 
 
 def dico_handler(dico):
@@ -38,6 +39,8 @@ def dico_handler(dico):
         dico_dict = acad1835.parser(dico_path)
     elif dico == 'acad1932':
         dico_dict = acad1932.parser(dico_path)
+    elif dico == 'bob':
+        dico_dict = bob.parser(dico_path)
     print "Parsing done"
     daf_loader(dico, dico_dict)
     
@@ -122,15 +125,15 @@ dico_path = "../dicos/"
 ## Dico selection :load all dicos if no arguments
 dicos = []
 try:
-    if sys.argv[1]:
-        for dico in sys.argv[1:]:
+    if sys.argv[2]:
+        for dico in sys.argv[2:]:
             dicos.append(dico)
 except IndexError:
     dicos = ['feraud', 'nicot', 'acad1694', 'acad1762',
-            'acad1798', 'acad1835', 'acad1932', 'littre', 'tlfi']
+            'acad1798', 'acad1835', 'acad1932', 'littre', 'tlfi', 'bob']
 
-## MySQL instantiation
-db = psycopg2.connect("dbname=dvlf user=postgres")
+## PostgreSQL instantiation
+db = psycopg2.connect("dbname=dvlf user=postgres password=%s" % sys.argv[1])
 cursor = db.cursor()
 
 ## Dico parsing and loading
@@ -141,6 +144,7 @@ for dico in dicos:
     else:
         tlfi_loader()
     db.commit()
-    print 'MySQL load done'
+    cursor.execute('grant select on %s to dvlf_readonly;' % dico)
+    print 'PostgreSQL load done'
         
 print "\nAll dicos loaded\n"
