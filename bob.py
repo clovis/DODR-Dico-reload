@@ -31,9 +31,12 @@ def parser(dico_path):
                 head = re.sub('&nbsp;', '', head)
                 
                 word = head
-                dico[word] = []
+                word = re.sub('([^ ]+).*', '\\1', word)
                 
-                head = word.upper()
+                if word not in dico:
+                    dico[word] = []
+                
+                head = head.upper()
                 entry += head
                 entry += ','
                 entry += '\n'
