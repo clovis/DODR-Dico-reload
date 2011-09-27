@@ -19,6 +19,7 @@ import acad1762
 import acad1798
 import acad1835
 import acad1932
+import bob
 
 
 def dico_handler(dico):
@@ -38,6 +39,8 @@ def dico_handler(dico):
         dico_dict = acad1835.parser(dico_path)
     elif dico == 'acad1932':
         dico_dict = acad1932.parser(dico_path)
+    elif dico == 'bob':
+        dico_dict = bob.parser(dico_path)
     print "Parsing done"
     daf_loader(dico, dico_dict)
     
@@ -94,7 +97,7 @@ def daf_loader(table, dico_dict):
     cursor.execute ("""
                     CREATE TABLE %s
                     (
-                        headword    VARCHAR(128) CHARACTER SET utf8, INDEX(headword),
+                        headword    VARCHAR(256) CHARACTER SET utf8, INDEX(headword),
                         entry       MEDIUMTEXT CHARACTER SET binary
                     ) CHARACTER SET utf8 COLLATE utf8_general_ci
                     """ % table)
@@ -140,7 +143,7 @@ try:
             dicos.append(dico)
 except IndexError:
     dicos = ['feraud', 'nicot', 'acad1694', 'acad1762',
-            'acad1798', 'acad1835', 'acad1932', 'littre', 'tlfi']
+            'acad1798', 'acad1835', 'acad1932', 'littre', 'tlfi', 'bob']
 
 ## MySQL instantiation
 db = MySQLdb.connect(user='root', passwd='%s' % passwd, db='dvlf', use_unicode=True) 
