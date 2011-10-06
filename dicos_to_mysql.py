@@ -20,6 +20,7 @@ import acad1798
 import acad1835
 import acad1932
 import bob
+import wiktionary
 
 
 def dico_handler(dico):
@@ -41,6 +42,8 @@ def dico_handler(dico):
         dico_dict = acad1932.parser(dico_path)
     elif dico == 'bob':
         dico_dict = bob.parser(dico_path)
+    elif dico == 'wiktionary':
+        dico_dict = wiktionary.parser(dico_path)
     print "Parsing done"
     daf_loader(dico, dico_dict)
     
