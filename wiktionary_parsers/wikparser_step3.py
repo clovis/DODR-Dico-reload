@@ -16,6 +16,7 @@ def parse(file):
         if re.search('<div1 type="entry"', line):
             if ent != '':
                 headword = entry.replace('.', '')
+                headword = re.sub('([^ ]+).*', '\\1', headword)
                 if headword not in wiki_dict:
                     wiki_dict[headword] = []
                 wiki_dict[headword].append(ent)

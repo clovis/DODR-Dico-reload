@@ -20,6 +20,7 @@ import acad1798
 import acad1835
 import acad1932
 import bob
+import wiktionary
 
 
 def dico_handler(dico):
@@ -41,6 +42,8 @@ def dico_handler(dico):
         dico_dict = acad1932.parser(dico_path)
     elif dico == 'bob':
         dico_dict = bob.parser(dico_path)
+    elif dico == 'wiktionary':
+        dico_dict = wiktionary.parser(dico_path)
     print "Parsing done"
     daf_loader(dico, dico_dict)
     
@@ -125,15 +128,15 @@ dico_path = "../dicos/"
 ## Dico selection :load all dicos if no arguments
 dicos = []
 try:
-    if sys.argv[2]:
-        for dico in sys.argv[2:]:
+    if sys.argv[3]:
+        for dico in sys.argv[3:]:
             dicos.append(dico)
 except IndexError:
     dicos = ['feraud', 'nicot', 'acad1694', 'acad1762',
             'acad1798', 'acad1835', 'acad1932', 'littre', 'tlfi', 'bob']
 
 ## PostgreSQL instantiation
-db = psycopg2.connect("dbname=dvlf user=postgres password=%s" % sys.argv[1])
+db = psycopg2.connect("dbname=dvlf user=%s password=%s" % (sys.argv[1], sys.argv[2]))
 cursor = db.cursor()
 
 ## Dico parsing and loading
